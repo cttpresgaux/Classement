@@ -1,0 +1,69 @@
+﻿body {
+}
+
+#controller{
+    display: flex;
+    margin: 15px 30px 20px 30px;
+}
+
+#controllerAdv {
+    flex: 1;
+}
+
+#exempleClassement{
+    display: none;
+}
+
+/* Commentaire */
+.classementContainer {
+    width: 630px;
+    height: 870px;
+    border: 1px dotted;
+    display: inline-block;
+}
+
+/* Commentaire */
+.classementMatches {
+    border: 1px solid;
+    width: 92%;
+    margin: 15px 4%;
+}
+.cm_ve {
+    width: 40%;
+}
+.cm_vr {
+    width: 40%;
+}
+.cm_sc {
+    width: 15%;
+}
+
+
+/* Commentaire */
+.classementRankings {
+    border: 2px solid;
+    width: 96%;
+    margin: 10px 2%;
+}
+
+.cr_position {
+    width: 5%;
+}
+.cr_team {
+    width: 15%;
+}
+.cr_played {
+    width: 15%;
+}
+.cr_won {
+    width: 15%;
+}
+.cr_lost {
+    width: 15%;
+}
+.cr_draw {
+    width: 15%;
+}
+.cr_points {
+    width: 15%;
+}
