@@ -8,7 +8,7 @@
     margin: 15px 30px 20px 30px;
 }
 
-#controllerAdv {
+#controllerDownload {
     flex: 1;
 }
 
@@ -16,44 +16,50 @@
     display: none;
 }
 
+.textAlignLeft{
+    text-align:left;
+}
+.textAlignCenter {
+    text-align: center;
+}
+
 /* Commentaire */
 .classementContainer {
-    width: 630px;
-    height: 870px;
+    width: 600px;
+    height: 750px;
     border: 1px dotted;
     display: inline-block;
     padding: 5px;
-    margin: 5px;
+    margin: 10px 5px;
 }
 
 /* Commentaire */
 .classementHeader {
     border: 3px outset;
     text-align: center;
-    padding: 5px;
-    width: 96%;
-    margin: 25px 2%;
-    font: bold 18px;
-    
+    padding: 10px 0px;
+    width: 98%;
+    margin: 20px 1% 80px 1%;
+    font: bold 30px arial;
+    background-color: lightgrey;
 }
 
 /* Commentaire */
 .classementMatches {
     border: 3px solid;
     width: 86%;
-    margin: 25px 7%;
-    text-align: center;
+    margin: 50px 7%;
 }
 
 
 .cm_ve {
-    width: 40%;
+    width: 38%;
 }
 .cm_vr {
-    width: 40%;
+    width: 38%;
 }
 .cm_sc {
-    width: 15%;
+    width: 24%;
 }
 
 
@@ -61,42 +67,54 @@
 .classementRankings {
     border: 3px solid;
     width: 96%;
-    margin: 25px 2%;
+    margin: 25px 2% 10px 2%;
 }
-
 
 .cr_position {
-    width: 5%;
+    width: 4%;
 }
 .cr_team {
-    width: 15%;
+    width: 48%;
 }
 .cr_played {
-    width: 15%;
+    width: 7%;
 }
 .cr_won {
-    width: 15%;
+    width: 7%;
 }
 .cr_lost {
-    width: 15%;
+    width: 7%;
 }
 .cr_draw {
-    width: 15%;
+    width: 7%;
 }
 .cr_points {
-    width: 15%;
+    width: 12%;
 }
 
 table {
     border: 1px solid;
     border-collapse: collapse;
 }
+tr:nth-child(odd) {
+    background-color: #ededed;
+}
 
 td, th {
     border: 1px solid;
     border-collapse: collapse;
 }
+th {
+    background-color: #808080;
+}
+td {
+    font: normal 18px arial;
+}
 .tableHeader {
-    font: bold 14px;
+    font: bold 24px arial;
     border: 3px solid;
+}
+
+tr.myTeam {
+    background-color: cornflowerblue;
 }

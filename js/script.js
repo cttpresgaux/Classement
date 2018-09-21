@@ -39,7 +39,7 @@ function Init() {
         var t = Teams[Divs[int]];
         var option = document.createElement("option");
         option.text = t.DivisionName + " - Presgaux " + t.Team;
-        option.value = t.DivisionId;
+        option.value = t.DivisionName;
         document.getElementById("SelectTeam").add(option);
 
     }
@@ -105,9 +105,17 @@ function importRankingByDiv() {
     var divId = Teams[Divs[rankingDone]].DivisionId;
     var week = document.getElementById("SelectWeek").value;
     var weekParam = "";
-    if (week != 0) {
-        weekParam = '<tab:WeekName>' + week + '</tab:WeekName>';
+    if (week == 0) {
+        var now = new Date();
+        for (var i = matchesDates.length - 1; i > 0; i--) {
+            var md = new Date(matchesDates[i]);
+            if (now > md) {
+                week = i;
+                i = 0;
+            }
+        }
     }
+    weekParam = '<tab:WeekName>' + week + '</tab:WeekName>';
 
     var xml = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tab="http://api.frenoy.net/TabTAPI">'
         + '<soapenv:Header/>'
@@ -135,8 +143,8 @@ function importMatchesByDiv() {
                 i = 0;
             }
         }
-        weekParam = '<tab:WeekName>' + week + '</tab:WeekName>';
     }
+    weekParam = '<tab:WeekName>' + week + '</tab:WeekName>';
 
     var xml = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tab="http://api.frenoy.net/TabTAPI">'
         + '<soapenv:Header/>'
@@ -192,12 +200,7 @@ function soap(strRequest, callback, _afterCallback) {
 };
 
 
-
-
 // Callback Function
-
-
-
 function setTeams(resp, callback) {
     var oParser = new DOMParser();
     var oDOM = oParser.parseFromString(resp, "application/xml");
@@ -270,9 +273,6 @@ function setRankingByDiv(resp, callback) {
 
     var node = document.getElementById(div);
     node.getElementsByClassName("ch_divName")[0].innerHTML = div;
-    if (week != 0) {
-        node.getElementsByClassName("ch_week")[0].innerHTML = " - Journée " + week;
-    }
 
     //Parsing Response
     var oParser = new DOMParser();
@@ -344,27 +344,38 @@ function setRankingByDiv(resp, callback) {
             //Write in HTML
             var row = document.createElement("tr");
             row.className = "pos_" + Position;
+            if (TeamClub == "N115") {
+                row.classList.add("myTeam");
+            }
 
             var cr_position = document.createElement("td");
             cr_position.innerText = Position;
+            cr_position.className = "textAlignCenter";
             row.appendChild(cr_position);
             var cr_team = document.createElement("td");
             cr_team.innerText = Team;
+            cr_team.className = "textAlignRight";
+            cr_team.style.padding = "1px 1px 1px 10px";
             row.appendChild(cr_team);
             var cr_played = document.createElement("td");
             cr_played.innerText = GamesPlayed;
+            cr_played.className = "textAlignCenter";
             row.appendChild(cr_played);
             var cr_won = document.createElement("td");
             cr_won.innerText = GamesWon;
+            cr_won.className = "textAlignCenter";
             row.appendChild(cr_won);
             var cr_lost = document.createElement("td");
             cr_lost.innerText = GamesLost;
+            cr_lost.className = "textAlignCenter";
             row.appendChild(cr_lost);
             var cr_draw = document.createElement("td");
             cr_draw.innerText = GamesDraw;
+            cr_draw.className = "textAlignCenter";
             row.appendChild(cr_draw);
             var cr_points = document.createElement("td");
             cr_points.innerText = Points;
+            cr_points.className = "textAlignCenter";
             row.appendChild(cr_points);
 
 
@@ -451,15 +462,21 @@ function setMatchesByDiv(resp, callback) {
 
             //Write in HTML
             var row = document.createElement("tr");
+            if (HomeClub == "N115" || AwayClub == "N115") {
+                row.classList.add("myTeam");
+            }
             
             var cm_ve = document.createElement("td");
             cm_ve.innerText = HomeTeam;
+            cm_ve.className = "textAlignCenter";
             row.appendChild(cm_ve);
             var cm_vr = document.createElement("td");
             cm_vr.innerText = AwayTeam;
+            cm_vr.className = "textAlignCenter";
             row.appendChild(cm_vr);
             var cm_sc = document.createElement("td");
             cm_sc.innerText = Score;
+            cm_sc.className = "textAlignCenter";
             row.appendChild(cm_sc);
             
 
@@ -513,4 +530,68 @@ function setMatchesDates(resp, callback) {
     }
     
     callback();
+}
+
+// Button Function
+function show() {
+    //Delete old ranking
+    for (var i = 0; i < Divs.length; i++) {
+        var e = document.getElementById(Teams[Divs[i]].DivisionName);
+        e.parentNode.removeChild(e);
+    }
+    //import new ones
+    importRankings();
+}
+
+function download() {
+    var week = document.getElementById("SelectWeek").value;
+    if (week == 0) {
+        var now = new Date();
+        for (var j = matchesDates.length - 1; j > 0; j--) {
+            var md = new Date(matchesDates[j]);
+            if (now > md) {
+                week = j;
+                j = 0;
+            }
+        }
+    }
+
+    var v = document.getElementById("SelectTeam").value;
+    var element;
+
+    if (v == "All") {
+        element = document.createElement("div");
+        for (var i = 0; i < Divs.length; i++) {
+            var e = document.getElementById(Teams[Divs[i]].DivisionName).cloneNode(true);
+            element.appendChild(changeForPrint(e));
+            var pb = document.createElement("div");
+            pb.className = "html2pdf__page-break";
+            element.appendChild(pb);
+        }
+        element.removeChild(element.lastChild);
+    } else {
+        element = changeForPrint( document.getElementById(v).cloneNode(true) );
+    } 
+    var opt = {
+        margin: 0,
+        filename: 'Classement_J'+week+'_'+v+'.pdf',
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+    html2pdf().from(element).set(opt).save();
+}
+
+
+function changeForPrint(element) {
+    
+    element.style.width = "795px";
+    element.style.height = "1000px";
+    element.borderStyle = "none";
+
+    var el2 = element.getElementsByClassName("classementMatches")[0];
+    el2.style.marginTop = "150px";
+    el2.style.marginBottom = "150px";
+
+    return element;
 }

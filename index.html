@@ -17,19 +17,19 @@
     <div id="controller">
         <span id="controllerDownload">
             <span>Division : &nbsp;</span>
-            <select id="SelectTeam"></select>            
+            <select id="SelectTeam"></select>
             <button id="downloadButton" disabled type="button" onclick="download()">Download</button>
         </span>
         <span id="controllerShow">
             <span>Semaine : &nbsp;</span>
             <select id="SelectWeek"></select>
-            <button id="showButton" disabled type="button" onclick="download()">Show</button>
+            <button id="showButton" disabled type="button" onclick="show()">Show</button>
         </span>
     </div>
     <div id="loader" class="loader loader-default is-active" data-text data-blink></div>
     <div id="Classements">
         <div id="exempleClassement" class="classementContainer">
-            <div class="classementHeader"> Division <span class="ch_divName">0A</span> - Prov. Namur - <span class="ch_divType">Messieurs</span><span class="ch_week"></span></div>
+            <div class="classementHeader"> Division <span class="ch_divName">0A</span> - Prov. Namur - <span class="ch_divType">Messieurs</span></div>
             <table class="classementMatches">
                 <tr class="tableHeader">
                     <th class="cm_ve">Visités</th>
@@ -41,15 +41,16 @@
                 <tr class="tableHeader">
                     <th class="cr_position"></th>
                     <th class="cr_team">Equipe</th>
-                    <th class="cr_played">Joué</th>
-                    <th class="cr_won">Gagné</th>
-                    <th class="cr_lost">Perdu</th>
-                    <th class="cr_draw">Nul</th>
+                    <th class="cr_played">J</th>
+                    <th class="cr_won">G</th>
+                    <th class="cr_lost">P</th>
+                    <th class="cr_draw">N</th>
                     <th class="cr_points">Points</th>
                 </tr>
             </table>
         </div>
     </div>
+    <script src="js/html2pdf.bundle.min.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>
