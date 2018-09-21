@@ -1,6 +1,8 @@
 ﻿body {
 }
 
+
+
 #controller{
     display: flex;
     margin: 15px 30px 20px 30px;
@@ -20,14 +22,30 @@
     height: 870px;
     border: 1px dotted;
     display: inline-block;
+    padding: 5px;
+    margin: 5px;
+}
+
+/* Commentaire */
+.classementHeader {
+    border: 3px outset;
+    text-align: center;
+    padding: 5px;
+    width: 96%;
+    margin: 25px 2%;
+    font: bold 18px;
+    
 }
 
 /* Commentaire */
 .classementMatches {
-    border: 1px solid;
-    width: 92%;
-    margin: 15px 4%;
+    border: 3px solid;
+    width: 86%;
+    margin: 25px 7%;
+    text-align: center;
 }
+
+
 .cm_ve {
     width: 40%;
 }
@@ -41,10 +59,11 @@
 
 /* Commentaire */
 .classementRankings {
-    border: 2px solid;
+    border: 3px solid;
     width: 96%;
-    margin: 10px 2%;
+    margin: 25px 2%;
 }
+
 
 .cr_position {
     width: 5%;
@@ -66,4 +85,18 @@
 }
 .cr_points {
     width: 15%;
+}
+
+table {
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+td, th {
+    border: 1px solid;
+    border-collapse: collapse;
+}
+.tableHeader {
+    font: bold 14px;
+    border: 3px solid;
 }

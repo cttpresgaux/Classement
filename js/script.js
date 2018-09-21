@@ -105,7 +105,7 @@ function importRankingByDiv() {
     var divId = Teams[Divs[rankingDone]].DivisionId;
     var week = document.getElementById("SelectWeek").value;
     var weekParam = "";
-    if (week) {
+    if (week != 0) {
         weekParam = '<tab:WeekName>' + week + '</tab:WeekName>';
     }
 
@@ -126,7 +126,15 @@ function importMatchesByDiv() {
     var divId = Teams[Divs[rankingDone]].DivisionId;
     var week = document.getElementById("SelectWeek").value;
     var weekParam = "";
-    if (week) {
+    if (week == 0) {
+        var now = new Date();
+        for (var i = matchesDates.length - 1; i > 0; i--) {
+            var md = new Date(matchesDates[i]);
+            if (now > md) {
+                week = i;
+                i = 0;
+            }
+        }
         weekParam = '<tab:WeekName>' + week + '</tab:WeekName>';
     }
 
@@ -370,19 +378,7 @@ function setRankingByDiv(resp, callback) {
 
 function setMatchesByDiv(resp, callback) {
     var div = Teams[Divs[rankingDone]].DivisionName;
-    var week = document.getElementById("SelectWeek").value;
-    if (week == 0) {
-        var now = new Date();
-        for (var i = matchesDates.length - 1; i > 0; i--) {
-            var md = new Date(matchesDates[i]);
-            if (now > md) {
-                week = i;
-                i = 0;
-            }
-        }
-    }
-
-
+ 
     var node = document.getElementById(div);
 
     //Parsing Response
@@ -468,7 +464,7 @@ function setMatchesByDiv(resp, callback) {
             
 
 
-            node.getElementsByClassName("classementRankings")[0].appendChild(row);
+            node.getElementsByClassName("classementMatches")[0].appendChild(row);
         }
 
     }
@@ -481,7 +477,7 @@ function setMatchesByDiv(resp, callback) {
 
 function setMatchesDates(resp, callback) {
     //Parsing Response
-    /**
+    
     var oParser = new DOMParser();
     var oDOM = oParser.parseFromString(resp, "application/xml");
 
@@ -515,6 +511,6 @@ function setMatchesDates(resp, callback) {
         }
 
     }
-    */
+    
     callback();
 }
