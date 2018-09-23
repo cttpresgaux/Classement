@@ -26,7 +26,7 @@
 /* Commentaire */
 .classementContainer {
     width: 600px;
-    height: 750px;
+    height: auto;
     border: 1px dotted;
     display: inline-block;
     padding: 5px;
@@ -39,11 +39,23 @@
     text-align: center;
     padding: 10px 0px;
     width: 98%;
-    margin: 20px 1% 80px 1%;
+    margin: 20px 1% 20px 1%;
     font: bold 30px arial;
     background-color: lightgrey;
 }
-
+.classementWeek { 
+    text-align: center;
+    width: auto;
+    margin: 10px auto;
+    
+}
+.cw_border {
+    display: inline-block;
+    padding: 10px;
+    border: 3px outset;
+    font: bold 24px arial;
+    background-color: lightgrey;
+}
 /* Commentaire */
 .classementMatches {
     border: 3px solid;
@@ -97,7 +109,7 @@ table {
     border-collapse: collapse;
 }
 tr:nth-child(odd) {
-    background-color: #ededed;
+    background-color: #DEDEDE;
 }
 
 td, th {
@@ -105,7 +117,7 @@ td, th {
     border-collapse: collapse;
 }
 th {
-    background-color: #808080;
+    background-color: #848484;
 }
 td {
     font: normal 18px arial;
@@ -115,6 +127,38 @@ td {
     border: 3px solid;
 }
 
-tr.myTeam {
+.classementRankings > tr.myTeam {
     background-color: cornflowerblue;
+}
+
+.classementRankings > tr.myTeam.pos_1 :first-child , 
+.classementRankings > tr.myTeam.pos_2 :first-child {
+    background-color: green;
+}
+
+.classementRankings > tr.myTeam.pos_3 :first-child,
+.classementRankings > tr.myTeam.pos_4 :first-child,
+.classementRankings > tr.myTeam.pos_5 :first-child,
+.classementRankings > tr.myTeam.pos_6 :first-child,
+.classementRankings > tr.myTeam.pos_7 :first-child,
+.classementRankings > tr.myTeam.pos_8 :first-child,
+.classementRankings > tr.myTeam.pos_9 :first-child,
+.classementRankings > tr.myTeam.pos_10 :first-child{
+    background-color: orange;
+}
+
+.classementRankings > tr.myTeam.pos_11 :first-child,
+.classementRankings > tr.myTeam.pos_12 :first-child{
+    background-color: red;
+}
+
+
+.classementMatches tr.mWon {
+    background-color: green;
+}
+.classementMatches tr.mDraw {
+    background-color: orange;
+}
+.classementMatches tr.mLost {
+    background-color: red;
 }

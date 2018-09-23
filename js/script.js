@@ -266,13 +266,26 @@ function setTeams(resp, callback) {
 function setRankingByDiv(resp, callback) {
     var div = Teams[Divs[rankingDone]].DivisionName;
     var week = document.getElementById("SelectWeek").value;
+    if (week == 0) {
+        var now = new Date();
+        for (var j = matchesDates.length - 1; j > 0; j--) {
+            var md = new Date(matchesDates[j]);
+            if (now > md) {
+                week = j;
+                j = 0;
+            }
+        }
+    }
 
     var classement = document.getElementById("exempleClassement").cloneNode(true);
     classement.id = div;
     document.getElementById("exempleClassement").parentNode.appendChild(classement);
 
+    
     var node = document.getElementById(div);
     node.getElementsByClassName("ch_divName")[0].innerHTML = div;
+    node.getElementsByClassName("cw_week")[0].innerHTML = week;
+    
 
     //Parsing Response
     var oParser = new DOMParser();
@@ -436,16 +449,20 @@ function setMatchesByDiv(resp, callback) {
                         break;
                     case "HomeTeam":
                         HomeTeam = matches[i].children[_i].innerHTML;
+                        HomeTeam = HomeTeam.replace("Vrij", "BYE");
                         break;
                     case "AwayClub":
                         AwayClub = matches[i].children[_i].innerHTML;
                         break;
                     case "AwayTeam":
                         AwayTeam = matches[i].children[_i].innerHTML;
+                        AwayTeam = AwayTeam.replace("Vrij", "BYE");
                         break;
                     case "Score":
                         Score = matches[i].children[_i].innerHTML;
                         Score = Score.replace("-", " - ");
+                        Score = Score.replace("0 ff (af)", "FG");
+                        Score = Score.replace("0 ff", "FF");
                         break;
                     case "MatchUniqueId":
                         MatchUniqueId = matches[i].children[_i].innerHTML;
@@ -463,7 +480,17 @@ function setMatchesByDiv(resp, callback) {
             //Write in HTML
             var row = document.createElement("tr");
             if (HomeClub == "N115" || AwayClub == "N115") {
-                row.classList.add("myTeam");
+                //row.classList.add("myTeam");
+                var s = Score.replace("FF", "0").replace("FG", "0").split(" - ");
+                var HSc = parseInt(s[0]);
+                var ASc = parseInt(s[1]);
+                if (HSc == ASc) {
+                    row.classList.add("mDraw");
+                } else if ((HomeClub == "N115" && HSc > ASc) || (AwayClub == "N115" && HSc < ASc) ) {
+                    row.classList.add("mWon");
+                } else {
+                    row.classList.add("mLost");
+                }
             }
             
             var cm_ve = document.createElement("td");
