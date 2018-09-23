@@ -3,16 +3,33 @@
 
 
 
-#controller{
+#controller {
+    overflow: hidden;
+    padding: 15px 0px 20px 0px;
+    position: fixed;
     display: flex;
-    margin: 15px 30px 20px 30px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: cornflowerblue;
+    width: 100%;
+    left: 0;
+    top: 0;
 }
+
 
 #controllerDownload {
-    flex: 1;
+    padding: 0px 20px;
 }
 
-#exempleClassement{
+#controllerShow {
+    padding: 0px 20px;
+}
+
+#spanSelectTeam, #spanStatInd, #spanSelectWeek {
+    margin: 0px 5px;
+}
+
+#exempleClassement {
     display: none;
 }
 
@@ -23,6 +40,16 @@
     text-align: center;
 }
 
+#Classements {
+    margin-top: 60px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+#Classements > * {
+    flex: 1 0 auto;
+}
+
 /* Commentaire */
 .classementContainer {
     width: 600px;
@@ -31,6 +58,8 @@
     display: inline-block;
     padding: 5px;
     margin: 10px 5px;
+    min-width: 600px;
+    max-width: 600px;
 }
 
 /* Commentaire */

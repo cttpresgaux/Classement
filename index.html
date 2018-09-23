@@ -15,16 +15,17 @@
 
 <body onload="FirstInit()">
     <div id="controller">
-        <span id="controllerDownload">
-            <span>Division : &nbsp;</span>
-            <select id="SelectTeam"></select>
+        <div id="controllerDownload">
+            <span id="spanSelectTeam">Division : &nbsp;<select id="SelectTeam"></select></span>
+            
             <button id="downloadButton" disabled type="button" onclick="download()">Download</button>
-        </span>
-        <span id="controllerShow">
-            <span>Semaine : &nbsp;</span>
-            <select id="SelectWeek"></select>
+        </div>
+        <div id="controllerShow">
+            <span id="spanStatInd">Stat Ind. : &nbsp;<input type="checkbox" id="StatInd" disabled /> </span>
+            <span id="spanSelectWeek">Semaine : &nbsp;<select id="SelectWeek"></select></span>
+            
             <button id="showButton" disabled type="button" onclick="show()">Show</button>
-        </span>
+        </div>
     </div>
     <div id="loader" class="loader loader-default is-active" data-text data-blink></div>
     <div id="Classements">
