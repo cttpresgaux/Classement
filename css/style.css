@@ -88,8 +88,8 @@
 /* Commentaire */
 .classementMatches {
     border: 3px solid;
-    width: 86%;
-    margin: 50px 7%;
+    width: 92%;
+    margin: 50px 4%;
 }
 
 
@@ -103,7 +103,46 @@
     width: 24%;
 }
 
+/* Commentaire */
+.classementRI {
+    border: 3px solid;
+    width: 84%;
+    margin: 50px 8%;
+}
 
+table.classementRI> tr > td{
+    font-size: 16px;
+}
+
+.classementRI_notCreated {
+    border: 3px solid;
+    width: 84%;
+    margin: 50px 8%;
+    display: none;
+}
+
+.cri_j {
+    width: 44%;
+}
+
+.cri_v {
+    width: 6%;
+}
+
+.cri_g {
+    width: 25%;
+}
+
+.cri_p {
+    width: 25%;
+}
+
+.Perf{
+    color: green;
+}
+.Contre{
+    color: red;
+}
 /* Commentaire */
 .classementRankings {
     border: 3px solid;
@@ -190,4 +229,19 @@ td {
 }
 .classementMatches tr.mLost {
     background-color: red;
+}
+
+.displayNone{
+    display: none;
+}
+
+.flexContainer {
+    width: 100%;
+    display: flex;
+    flex-flow: nowrap;
+    justify-content: space-around;
+}
+
+.flexItem {
+
 }

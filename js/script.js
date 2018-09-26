@@ -1,6 +1,9 @@
 // GLOBAL
 
 var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+var rankingValue = ["NC", "E6", "E4", "E2", "E0", "D6", "D4", "D2", "D0", "C6", "C4", "C2", "C0", "B6", "B4", "B2", "B0","A"]
+
+
 
 var Divs = [];
 var Teams = {};
@@ -34,21 +37,40 @@ function FirstInit() {
 
 function Init() {
 
+    var st = document.getElementById("SelectTeam");
+
     // List Of Divisions
     for (var int = 0; int < Divs.length; int++) {
         var t = Teams[Divs[int]];
         var option = document.createElement("option");
         option.text = t.DivisionName + " - Presgaux " + t.Team;
         option.value = t.DivisionName;
-        document.getElementById("SelectTeam").add(option);
+        st.add(option);
 
     }
 
     var option = document.createElement("option");
     option.text = "Toutes";
     option.value = "All";
-    document.getElementById("SelectTeam").add(option);
+    st.add(option);
 
+    //LocalStorage
+    var check = localStorage.getItem('_Storage_StatInd');
+    if (check != null) {   
+        if (check == "true") {
+            document.getElementById("StatInd").checked = true;
+            changeRI(true); 
+        }
+                
+    }
+    var value = localStorage.getItem('_Storage_SelectTeam');
+    if (value != null) {       
+        for (var i = 0; i < st.options.length; i++) {
+            if (st.options[i].value == value) {
+                st.selectedIndex = i;
+            }
+        }
+    }
 
     hideLoader();
 };
@@ -152,6 +174,7 @@ function importMatchesByDiv() {
         + '<tab:GetMatchesRequest>'
         + '<tab:DivisionId>' + divId + '</tab:DivisionId>'
         + weekParam
+        + '<tab:WithDetails>YES</tab:WithDetails>'
         + '</tab:GetMatchesRequest>'
         + '</soapenv:Body>'
         + '</soapenv:Envelope>'
@@ -428,6 +451,7 @@ function setMatchesByDiv(resp, callback) {
             var MatchUniqueId = null;
             var IsHomeForfeited = null;
             var IsAwayForfeited = null;
+            var MatchDetails = null;
 
 
             for (var _i = 0; _i < matches[i].children.length; _i++) {
@@ -473,6 +497,9 @@ function setMatchesByDiv(resp, callback) {
                     case "IsAwayForfeited":
                         IsAwayForfeited = matches[i].children[_i].innerHTML;
                         break;
+                    case "MatchDetails":
+                        MatchDetails = matches[i].children[_i].children;
+                        break;
                     
                 }
             }
@@ -480,17 +507,115 @@ function setMatchesByDiv(resp, callback) {
             //Write in HTML
             var row = document.createElement("tr");
             if (HomeClub == "N115" || AwayClub == "N115") {
+                var isHome = (HomeClub == "N115");
                 //row.classList.add("myTeam");
                 var s = Score.replace("FF", "0").replace("FG", "0").split(" - ");
                 var HSc = parseInt(s[0]);
                 var ASc = parseInt(s[1]);
                 if (HSc == ASc) {
                     row.classList.add("mDraw");
-                } else if ((HomeClub == "N115" && HSc > ASc) || (AwayClub == "N115" && HSc < ASc) ) {
+                } else if ((isHome && HSc > ASc) || (!isHome && HSc < ASc) ) {
                     row.classList.add("mWon");
                 } else {
                     row.classList.add("mLost");
                 }
+
+                //Resultat Ind
+                if (MatchDetails[0].innerHTML == 'true') {
+                    var HPs = [];
+                    var APs = [];
+                    var Matchs = [];
+
+                    for (var i = 0; i < MatchDetails.length; i++) {
+                        switch (MatchDetails[i].localName) {
+                            case "HomePlayers":
+                                for (var j = 0; j < MatchDetails[i].children.length; j++) {
+                                    if (MatchDetails[i].children[j].localName == "Players") {
+                                        var p = xmlToPlayer(MatchDetails[i].children[j].children);
+                                        HPs[p.position] = p;
+                                    }
+                                }                                
+                                break;
+                            case "AwayPlayers":
+                                for (var j = 0; j < MatchDetails[i].children.length; j++) {
+                                    if (MatchDetails[i].children[j].localName == "Players") {
+                                        var p = xmlToPlayer(MatchDetails[i].children[j].children);
+                                        APs[p.position] = p;
+                                    }
+                                }
+                                break;
+                            case "IndividualMatchResults":
+                                var m = xmlToMatch(MatchDetails[i].children);
+                                Matchs[m.position] = m;
+                                break;
+                        }
+                    }
+
+                    for (var i = 1; i < Matchs.length; i++) {
+                        var m = Matchs[i];
+                        if (!m.wo) {
+                            if (m.homeWon) {
+                                HPs[m.hpi].won.push(APs[m.api].ranking);
+                                APs[m.api].lost.push(HPs[m.hpi].ranking);
+                            } else {
+                                HPs[m.hpi].lost.push(APs[m.api].ranking);
+                                APs[m.api].won.push(HPs[m.hpi].ranking);
+                            }
+                        }
+                    }
+
+                    //Write in HTML RI
+                    var Players;
+                    if (isHome) {
+                        Players = HPs;
+                    } else {
+                        Players = APs;
+                    }
+                    for (var i2 = 1; i2 < Players.length; i2++) {
+                        var rowRI = document.createElement("tr");
+                        var td = document.createElement("td");
+                        td.innerText = Players[i2].name;
+                        rowRI.appendChild(td);
+
+                        var td = document.createElement("td");
+                        td.className = "textAlignCenter";
+                        td.innerText = Players[i2].victory;
+                        rowRI.appendChild(td);
+
+                        var td = document.createElement("td");
+                        var div = document.createElement("div");
+                        div.className = "flexContainer";
+                        for (var i3 = 0; i3 < Players[i2].won.length; i3++) {
+                            var span = document.createElement("span");
+                            span.innerText = Players[i2].won[i3] + " ";
+                            if (rankingValue.indexOf(Players[i2].ranking) < rankingValue.indexOf(Players[i2].won[i3])) {
+                                span.className = "Perf";
+                            }
+                            div.appendChild(span);
+                        }
+                        rowRI.appendChild(td);
+                        rowRI.appendChild(td);
+
+                        var td = document.createElement("td");
+                        var div = document.createElement("div");
+                        div.className = "flexContainer";
+                        for (var i3 = 0; i3 < Players[i2].lost.length; i3++) {
+                            var span = document.createElement("span");
+                            span.innerText = Players[i2].lost[i3] + " ";
+                            if (rankingValue.indexOf(Players[i2].ranking) > rankingValue.indexOf(Players[i2].lost[i3])) {
+                                span.className = "Contre";
+                            }
+                            div.appendChild(span);
+                        }
+                        td.appendChild(div);
+                        rowRI.appendChild(td);
+                        node.getElementsByClassName("classementRI")[0].appendChild(rowRI);
+                    }
+
+                } else {
+                    node.getElementsByClassName("classementRI")[0].className = "classementRI_notCreated";
+                }
+
             }
             
             var cm_ve = document.createElement("td");
@@ -518,6 +643,99 @@ function setMatchesByDiv(resp, callback) {
     callback();
 }
 
+
+function xmlToPlayer(nodeCollection) {
+    var Position;
+    var FirstName;
+    var LastName;
+    var Ranking;
+    var VictoryCount;
+    var IsForfeited = false;
+
+    for (var i = 0; i < nodeCollection.length; i++) {       
+        switch (nodeCollection[i].localName) {
+            case "Position":
+                Position = nodeCollection[i].innerHTML;
+                break;
+            case "FirstName":
+                FirstName = nodeCollection[i].innerHTML;
+                break;
+            case "LastName":
+                LastName = nodeCollection[i].innerHTML;
+                break;
+            case "Ranking":
+                Ranking = nodeCollection[i].innerHTML;
+                if (Ranking == "NG") {
+                    Ranking = "NC";
+                }
+                break;
+            case "VictoryCount":
+                VictoryCount = nodeCollection[i].innerHTML;
+                break;
+            case "IsForfeited":
+                IsForfeited = (nodeCollection[i].innerHTML == "true");
+                break;
+        }
+    }
+
+    var p = {
+        position: Position,
+        name: LastName + " " + FirstName,
+        ranking: Ranking,
+        victory: VictoryCount,
+        won: [],
+        lost: []
+    }
+    if (IsForfeited) {
+        p.victory = "WO";
+    }
+    return p;
+}
+
+function xmlToMatch(nodeCollection) {
+    var Position;
+    var HomePlayerMatchIndex;
+    var AwayPlayerMatchIndex;
+    var IsAwayForfeited = false;
+    var IsHomeForfeited = false;
+    var AwaySetCount = 0;
+    var HomeSetCount = 0;
+
+    for (var i = 0; i < nodeCollection.length; i++) {
+        switch (nodeCollection[i].localName) {
+            case "Position":
+                Position = parseInt( nodeCollection[i].innerHTML);
+                break;
+            case "HomePlayerMatchIndex":
+                HomePlayerMatchIndex = parseInt( nodeCollection[i].innerHTML);
+                break;
+            case "AwayPlayerMatchIndex":
+                AwayPlayerMatchIndex = parseInt( nodeCollection[i].innerHTML);
+                break;
+            case "IsAwayForfeited":
+                IsAwayForfeited = (nodeCollection[i].innerHTML == "true");
+                break;
+            case "IsHomeForfeited":
+                IsHomeForfeited = (nodeCollection[i].innerHTML == "true");
+                break;
+            case "HomeSetCount":
+                HomeSetCount = parseInt(nodeCollection[i].innerHTML);
+                break;
+            case "AwaySetCount":
+                AwaySetCount = parseInt(nodeCollection[i].innerHTML);
+                break;
+        }
+    }
+
+    var m = {
+        position: Position,
+        hpi: HomePlayerMatchIndex,
+        api: AwayPlayerMatchIndex,
+        homeWon: (HomeSetCount > AwaySetCount),
+        wo: (IsHomeForfeited || IsAwayForfeited)
+    }
+    return m;
+}
 
 function setMatchesDates(resp, callback) {
     //Parsing Response
@@ -613,12 +831,36 @@ function download() {
 function changeForPrint(element) {
     
     element.style.width = "795px";
+    element.style.minWidth  = "795px";
+    element.style.maxWidth = "795px";
     element.style.height = "1000px";
     element.borderStyle = "none";
 
-    var el2 = element.getElementsByClassName("classementMatches")[0];
-    el2.style.marginTop = "150px";
-    el2.style.marginBottom = "150px";
+    if (!document.getElementById("StatInd").checked) {
+        var el2 = element.getElementsByClassName("classementMatches")[0];
+        el2.style.marginTop = "150px";
+        el2.style.marginBottom = "150px";
+
+    }
 
     return element;
+}
+
+
+function changeRI(check) {
+    localStorage.setItem("_Storage_StatInd", check);
+    var RIs = document.getElementsByClassName("classementRI");
+    for (var i = 0; i < RIs.length; i++) {
+        if (check) {
+            RIs[i].className = "classementRI";
+        } else {
+            RIs[i].className = "classementRI displayNone";
+        }
+        
+    }
+
+}
+
+function changeSelectTeam(value) {
+    localStorage.setItem("_Storage_SelectTeam", value);
 }

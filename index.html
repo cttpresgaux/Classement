@@ -16,12 +16,12 @@
 <body onload="FirstInit()">
     <div id="controller">
         <div id="controllerDownload">
-            <span id="spanSelectTeam">Division : &nbsp;<select id="SelectTeam"></select></span>
+            <span id="spanSelectTeam">Division : &nbsp;<select id="SelectTeam" onchange="changeSelectTeam(this.value)"></select></span>
             
             <button id="downloadButton" disabled type="button" onclick="download()">Download</button>
         </div>
         <div id="controllerShow">
-            <span id="spanStatInd">Stat Ind. : &nbsp;<input type="checkbox" id="StatInd" disabled /> </span>
+            <span id="spanStatInd">Stat Ind. : &nbsp;<input type="checkbox" id="StatInd" onchange="changeRI(this.checked)" /> </span>
             <span id="spanSelectWeek">Semaine : &nbsp;<select id="SelectWeek"></select></span>
             
             <button id="showButton" disabled type="button" onclick="show()">Show</button>
@@ -37,6 +37,14 @@
                     <th class="cm_ve">Visités</th>
                     <th class="cm_vr">Visiteurs</th>
                     <th class="cm_sc">Score</th>
+                </tr>
+            </table>
+            <table class="classementRI displayNone">
+                <tr class="tableHeader">
+                    <th class="cri_j">Joueur</th>
+                    <th class="cri_v">V.</th>
+                    <th class="cri_g">Gagné</th>
+                    <th class="cri_p">Perdu</th>
                 </tr>
             </table>
             <table class="classementRankings">
