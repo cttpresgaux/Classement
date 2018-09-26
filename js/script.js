@@ -834,7 +834,7 @@ function changeForPrint(element) {
     element.style.minWidth  = "795px";
     element.style.maxWidth = "795px";
     element.style.height = "1000px";
-    element.border = "thin hidden #000000";
+    element.style.borderStyle = "hidden";
 
     element.getElementsByClassName("classementWeek")[0].style.marginTop = "80px";
 
