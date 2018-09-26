@@ -834,7 +834,9 @@ function changeForPrint(element) {
     element.style.minWidth  = "795px";
     element.style.maxWidth = "795px";
     element.style.height = "1000px";
-    element.borderStyle = "none";
+    element.border = "thin hidden #000000";
+
+    element.getElementsByClassName("classementWeek")[0].style.marginTop = "80px";
 
     if (!document.getElementById("StatInd").checked) {
         var el2 = element.getElementsByClassName("classementMatches")[0];
