@@ -593,8 +593,9 @@ function setMatchesByDiv(resp, callback) {
                             }
                             div.appendChild(span);
                         }
+                        td.appendChild(div);
                         rowRI.appendChild(td);
-                        rowRI.appendChild(td);
+                        node.getElementsByClassName("classementRI")[0].appendChild(rowRI);
 
                         var td = document.createElement("td");
                         var div = document.createElement("div");
