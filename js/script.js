@@ -587,7 +587,7 @@ function setMatchesByDiv(resp, callback) {
                         div.className = "flexContainer";
                         for (var i3 = 0; i3 < Players[i2].won.length; i3++) {
                             var span = document.createElement("span");
-                            span.innerText = Players[i2].won[i3] + " ";
+                            span.innerText = Players[i2].won[i3];
                             if (rankingValue.indexOf(Players[i2].ranking) < rankingValue.indexOf(Players[i2].won[i3])) {
                                 span.className = "Perf";
                             }
@@ -602,7 +602,7 @@ function setMatchesByDiv(resp, callback) {
                         div.className = "flexContainer";
                         for (var i3 = 0; i3 < Players[i2].lost.length; i3++) {
                             var span = document.createElement("span");
-                            span.innerText = Players[i2].lost[i3] + " ";
+                            span.innerText = Players[i2].lost[i3];
                             if (rankingValue.indexOf(Players[i2].ranking) > rankingValue.indexOf(Players[i2].lost[i3])) {
                                 span.className = "Contre";
                             }
