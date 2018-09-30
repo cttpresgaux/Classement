@@ -681,7 +681,7 @@ function xmlToPlayer(nodeCollection) {
 
     var p = {
         position: Position,
-        name: LastName + " " + FirstName,
+        name: FirstName + " " + LastName + ".",
         ranking: Ranking,
         victory: VictoryCount,
         won: [],
