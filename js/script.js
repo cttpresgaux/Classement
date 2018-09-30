@@ -245,25 +245,25 @@ function setTeams(resp, callback) {
             var MatchType = null;
 
 
-            for (var _i = 0; _i < teams[i].children.length; _i++) {
-                switch (teams[i].children[_i].localName) {
+            for (var i2 = 0; i2 < teams[i].children.length; i2++) {
+                switch (teams[i].children[i2].localName) {
                     case "TeamId":
-                        TeamId = teams[i].children[_i].innerHTML;
+                        TeamId = teams[i].children[i2].innerHTML;
                         break;
                     case "Team":
-                        Team = teams[i].children[_i].innerHTML;
+                        Team = teams[i].children[i2].innerHTML;
                         break;
                     case "DivisionId":
-                        DivisionId = teams[i].children[_i].innerHTML;
+                        DivisionId = teams[i].children[i2].innerHTML;
                         break;
                     case "DivisionName":
-                        DivisionName = teams[i].children[_i].innerHTML.split(" - ")[0].split(" ")[1];
+                        DivisionName = teams[i].children[i2].innerHTML.split(" - ")[0].split(" ")[1];
                         break;
                     case "DivisionCategory":
-                        DivisionCategory = teams[i].children[_i].innerHTML;
+                        DivisionCategory = teams[i].children[i2].innerHTML;
                         break;
                     case "MatchType":
-                        MatchType = teams[i].children[_i].innerHTML;
+                        MatchType = teams[i].children[i2].innerHTML;
                         break;
                 }
             }
@@ -335,44 +335,44 @@ function setRankingByDiv(resp, callback) {
             var TeamClub = null;
 
 
-            for (var _i = 0; _i < ranking[i].children.length; _i++) {
-                switch (ranking[i].children[_i].localName) {
+            for (var i2 = 0; i2 < ranking[i].children.length; i2++) {
+                switch (ranking[i].children[i2].localName) {
                     case "Position":
-                        Position = ranking[i].children[_i].innerHTML;
+                        Position = ranking[i].children[i2].innerHTML;
                         break;
                     case "Team":
-                        Team = ranking[i].children[_i].innerHTML;
+                        Team = ranking[i].children[i2].innerHTML;
                         Team = Team.replace(" (af)", " (FG)");
                         break;
                     case "GamesPlayed":
-                        GamesPlayed = parseInt(ranking[i].children[_i].innerHTML);
+                        GamesPlayed = parseInt(ranking[i].children[i2].innerHTML);
                         break;
                     case "GamesWon":
-                        GamesWon = parseInt(ranking[i].children[_i].innerHTML);
+                        GamesWon = parseInt(ranking[i].children[i2].innerHTML);
                         break;
                     case "GamesLost":
-                        GamesLost = parseInt(ranking[i].children[_i].innerHTML);
+                        GamesLost = parseInt(ranking[i].children[i2].innerHTML);
                         break;
                     case "GamesDraw":
-                        GamesDraw = parseInt(ranking[i].children[_i].innerHTML);
+                        GamesDraw = parseInt(ranking[i].children[i2].innerHTML);
                         break;
                     case "IndividualMatchesWon":
-                        IndividualMatchesWon = parseInt(ranking[i].children[_i].innerHTML);
+                        IndividualMatchesWon = parseInt(ranking[i].children[i2].innerHTML);
                         break;
                     case "IndividualMatchesLost":
-                        IndividualMatchesLost = parseInt(ranking[i].children[_i].innerHTML);
+                        IndividualMatchesLost = parseInt(ranking[i].children[i2].innerHTML);
                         break;
                     case "IndividualSetsWon":
-                        IndividualSetsWon = parseInt(ranking[i].children[_i].innerHTML);
+                        IndividualSetsWon = parseInt(ranking[i].children[i2].innerHTML);
                         break;
                     case "IndividualSetsLost":
-                        IndividualSetsLost = parseInt(ranking[i].children[_i].innerHTML);
+                        IndividualSetsLost = parseInt(ranking[i].children[i2].innerHTML);
                         break;
                     case "Points":
-                        Points = parseInt(ranking[i].children[_i].innerHTML);
+                        Points = parseInt(ranking[i].children[i2].innerHTML);
                         break;
                     case "TeamClub":
-                        TeamClub = ranking[i].children[_i].innerHTML;
+                        TeamClub = ranking[i].children[i2].innerHTML;
                         break;
                 }
             }
@@ -454,51 +454,51 @@ function setMatchesByDiv(resp, callback) {
             var MatchDetails = null;
 
 
-            for (var _i = 0; _i < matches[i].children.length; _i++) {
-                switch (matches[i].children[_i].localName) {
+            for (var i2 = 0; i2 < matches[i].children.length; i2++) {
+                switch (matches[i].children[i2].localName) {
                     case "MatchId":
-                        MatchId = matches[i].children[_i].innerHTML;
+                        MatchId = matches[i].children[i2].innerHTML;
                         break;
                     case "WeekName":
-                        WeekName = matches[i].children[_i].innerHTML;
+                        WeekName = matches[i].children[i2].innerHTML;
                         break;
                     case "Date":
-                        _Date = matches[i].children[_i].innerHTML;
+                        _Date = matches[i].children[i2].innerHTML;
                         break;
                     case "Time":
-                        Time = matches[i].children[_i].innerHTML;
+                        Time = matches[i].children[i2].innerHTML;
                         break;
                     case "HomeClub":
-                        HomeClub = matches[i].children[_i].innerHTML;
+                        HomeClub = matches[i].children[i2].innerHTML;
                         break;
                     case "HomeTeam":
-                        HomeTeam = matches[i].children[_i].innerHTML;
+                        HomeTeam = matches[i].children[i2].innerHTML;
                         HomeTeam = HomeTeam.replace("Vrij", "BYE");
                         break;
                     case "AwayClub":
-                        AwayClub = matches[i].children[_i].innerHTML;
+                        AwayClub = matches[i].children[i2].innerHTML;
                         break;
                     case "AwayTeam":
-                        AwayTeam = matches[i].children[_i].innerHTML;
+                        AwayTeam = matches[i].children[i2].innerHTML;
                         AwayTeam = AwayTeam.replace("Vrij", "BYE");
                         break;
                     case "Score":
-                        Score = matches[i].children[_i].innerHTML;
+                        Score = matches[i].children[i2].innerHTML;
                         Score = Score.replace("-", " - ");
                         Score = Score.replace("0 ff (af)", "FG");
                         Score = Score.replace("0 ff", "FF");
                         break;
                     case "MatchUniqueId":
-                        MatchUniqueId = matches[i].children[_i].innerHTML;
+                        MatchUniqueId = matches[i].children[i2].innerHTML;
                         break;
                     case "IsHomeForfeited":
-                        IsHomeForfeited = matches[i].children[_i].innerHTML;
+                        IsHomeForfeited = matches[i].children[i2].innerHTML;
                         break;
                     case "IsAwayForfeited":
-                        IsAwayForfeited = matches[i].children[_i].innerHTML;
+                        IsAwayForfeited = matches[i].children[i2].innerHTML;
                         break;
                     case "MatchDetails":
-                        MatchDetails = matches[i].children[_i].children;
+                        MatchDetails = matches[i].children[i2].children;
                         break;
                     
                 }
@@ -526,33 +526,33 @@ function setMatchesByDiv(resp, callback) {
                     var APs = [];
                     var Matchs = [];
 
-                    for (var i = 0; i < MatchDetails.length; i++) {
-                        switch (MatchDetails[i].localName) {
+                    for (var i3 = 0; i3 < MatchDetails.length; i3++) {
+                        switch (MatchDetails[i3].localName) {
                             case "HomePlayers":
-                                for (var j = 0; j < MatchDetails[i].children.length; j++) {
-                                    if (MatchDetails[i].children[j].localName == "Players") {
-                                        var p = xmlToPlayer(MatchDetails[i].children[j].children);
+                                for (var j = 0; j < MatchDetails[i3].children.length; j++) {
+                                    if (MatchDetails[i3].children[j].localName == "Players") {
+                                        var p = xmlToPlayer(MatchDetails[i3].children[j].children);
                                         HPs[p.position] = p;
                                     }
                                 }                                
                                 break;
                             case "AwayPlayers":
-                                for (var j = 0; j < MatchDetails[i].children.length; j++) {
-                                    if (MatchDetails[i].children[j].localName == "Players") {
-                                        var p = xmlToPlayer(MatchDetails[i].children[j].children);
+                                for (var j = 0; j < MatchDetails[i3].children.length; j++) {
+                                    if (MatchDetails[i3].children[j].localName == "Players") {
+                                        var p = xmlToPlayer(MatchDetails[i3].children[j].children);
                                         APs[p.position] = p;
                                     }
                                 }
                                 break;
                             case "IndividualMatchResults":
-                                var m = xmlToMatch(MatchDetails[i].children);
+                                var m = xmlToMatch(MatchDetails[i3].children);
                                 Matchs[m.position] = m;
                                 break;
                         }
                     }
 
-                    for (var i = 1; i < Matchs.length; i++) {
-                        var m = Matchs[i];
+                    for (var i4 = 1; i4 < Matchs.length; i4++) {
+                        var m = Matchs[i4];
                         if (!m.wo) {
                             if (m.homeWon) {
                                 HPs[m.hpi].won.push(APs[m.api].ranking);
@@ -753,13 +753,13 @@ function setMatchesDates(resp, callback) {
             var WeekName = null;
             var _Date = null;
 
-             for (var _i = 0; _i < matches[i].children.length; _i++) {
-                 switch (matches[i].children[_i].localName) {
+             for (var i2 = 0; i2 < matches[i].children.length; i2++) {
+                 switch (matches[i].children[i2].localName) {
                      case "WeekName":
-                         WeekName = parseInt(matches[i].children[_i].innerHTML);
+                         WeekName = parseInt(matches[i].children[i2].innerHTML);
                          break;
                      case "Date":
-                         _Date = matches[i].children[_i].innerHTML;
+                         _Date = matches[i].children[i2].innerHTML;
                          break;
                  }
              }
