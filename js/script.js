@@ -553,7 +553,7 @@ function setMatchesByDiv(resp, callback) {
 
                     for (var i4 = 1; i4 < Matchs.length; i4++) {
                         var m = Matchs[i4];
-                        if (!m.wo) {
+                        if (m != undefined && !m.wo) {
                             if (m.homeWon) {
                                 HPs[m.hpi].won.push(APs[m.api].ranking);
                                 APs[m.api].lost.push(HPs[m.hpi].ranking);
