@@ -822,7 +822,7 @@ function download() {
         margin: 0,
         filename: 'Classement_J'+week+'_'+v+'.pdf',
         image: { type: 'jpeg', quality: 1 },
-        html2canvas: { scale: 2 },
+        html2canvas: { scale: 1.8 },
         jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
     };
     html2pdf().from(element).set(opt).save();
