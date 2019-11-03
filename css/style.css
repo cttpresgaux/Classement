@@ -1,4 +1,4 @@
-﻿body {
+body {
 }
 
 
@@ -252,4 +252,12 @@ td {
 	
 	width: 25%;
     display: inline-block;
+}
+
+.NM {
+    font-weight: bolder;
+    font-style: italic;
+    margin-top: -25px;
+    margin-bottom: 50px;
+    text-align: center;
 }
