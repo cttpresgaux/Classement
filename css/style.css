@@ -41,7 +41,7 @@
 }
 
 #Classements {
-    margin-top: 50px;
+    margin-top: 60px;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
@@ -95,7 +95,7 @@
 .nextMatches {
     border: 3px solid;
     width: 70%;
-    margin: 30px 8% 15px 15%;
+    margin: 50px 8% 15px 15%;
 }
 
 .nextMatchesTitle{
@@ -124,7 +124,7 @@
 .classementRI {
     border: 3px solid;
     width: 84%;
-    margin: 35px 8%;
+    margin: 60px 8%;
 }
 
 table.classementRI> tr > td{

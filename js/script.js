@@ -755,51 +755,61 @@ function setMatchesByDiv(resp, callback) {
                     teamLetter = AwayTeam.substr(AwayTeam.length - 1);
                 }
 
-                var Cal1 = Calendrier[weekNumber + 1][teamLetter];
-                node.getElementsByClassName("NM1_date")[0].innerText = transformDate(Cal1.Date, weekNumber + 1);
-                if (Cal1.HomeTeam == "BYE" || Cal1.AwayTeam == "BYE") {
-                    node.getElementsByClassName("NM1_isHome")[0].innerHTML = "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;";
-                    node.getElementsByClassName("NM1_team")[0].innerText = "BYE";
-                    node.getElementsByClassName("NM1_team")[0].className = "NM1_team bold bye";
-                    node.getElementsByClassName("NM1_a")[0].innerText = "";
+                if (weekNumber + 1 <= 22) {
+                    var Cal1 = Calendrier[weekNumber + 1][teamLetter];
+                    node.getElementsByClassName("NM1_date")[0].innerText = transformDate(Cal1.Date, weekNumber + 1);
+                    if (Cal1.HomeTeam == "BYE" || Cal1.AwayTeam == "BYE") {
+                        node.getElementsByClassName("NM1_isHome")[0].innerHTML = "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;";
+                        node.getElementsByClassName("NM1_team")[0].innerText = "BYE";
+                        node.getElementsByClassName("NM1_team")[0].className = "NM1_team bold bye";
+                        node.getElementsByClassName("NM1_a")[0].innerText = "";
+                    } else {
+                        node.getElementsByClassName("NM1_isHome")[0].innerText = ( (Cal1.HomeClub == "N115") ? "contre " : "à ");
+                        node.getElementsByClassName("NM1_team")[0].innerText = ( (Cal1.HomeClub == "N115") ? Cal1.AwayTeam : Cal1.HomeTeam);                    
+                    }
+                    node.getElementsByClassName("NM1_time")[0].innerText = Cal1.Time || "";
+                    node.getElementsByClassName("NM1_time")[0].className = ( (Cal1.HomeClub == "N115") ? "NM1_team bold home" : "NM1_team bold nothome");
                 } else {
-                    node.getElementsByClassName("NM1_isHome")[0].innerText = ( (Cal1.HomeClub == "N115") ? "contre " : "à ");
-                    node.getElementsByClassName("NM1_team")[0].innerText = ( (Cal1.HomeClub == "N115") ? Cal1.AwayTeam : Cal1.HomeTeam);                    
+                    node.getElementsByClassName("NM1")[0].className = "NM1 displayNone";
                 }
-                node.getElementsByClassName("NM1_time")[0].innerText = Cal1.Time || "";
-                node.getElementsByClassName("NM1_time")[0].className = ( (Cal1.HomeClub == "N115") ? "NM1_team bold home" : "NM1_team bold nothome");
-        
 
 
-                var Cal2 = Calendrier[weekNumber + 2][teamLetter];
-                node.getElementsByClassName("NM2_date")[0].innerText = transformDate(Cal2.Date, weekNumber + 2);
-                if (Cal2.HomeTeam == "BYE" || Cal2.AwayTeam == "BYE") {
-                    node.getElementsByClassName("NM2_isHome")[0].innerHTML = "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;";
-                    node.getElementsByClassName("NM2_team")[0].innerText = "BYE";
-                    node.getElementsByClassName("NM2_team")[0].className = "NM2_team bold bye";
-                    node.getElementsByClassName("NM2_a")[0].innerText = "";
+                if (weekNumber + 2 <= 22) {
+                    var Cal2 = Calendrier[weekNumber + 2][teamLetter];
+                    node.getElementsByClassName("NM2_date")[0].innerText = transformDate(Cal2.Date, weekNumber + 2);
+                    if (Cal2.HomeTeam == "BYE" || Cal2.AwayTeam == "BYE") {
+                        node.getElementsByClassName("NM2_isHome")[0].innerHTML = "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;";
+                        node.getElementsByClassName("NM2_team")[0].innerText = "BYE";
+                        node.getElementsByClassName("NM2_team")[0].className = "NM2_team bold bye";
+                        node.getElementsByClassName("NM2_a")[0].innerText = "";
+                    } else {
+                        node.getElementsByClassName("NM2_isHome")[0].innerText = ( (Cal2.HomeClub == "N115") ? "contre " : "à ");
+                        node.getElementsByClassName("NM2_team")[0].innerText = ( (Cal2.HomeClub == "N115") ? Cal2.AwayTeam : Cal2.HomeTeam);                    
+                    }
+                    node.getElementsByClassName("NM2_time")[0].innerText = Cal2.Time || "";
+                    node.getElementsByClassName("NM2_time")[0].className = ( (Cal2.HomeClub == "N115") ? "NM2_team bold home" : "NM2_team bold nothome");
                 } else {
-                    node.getElementsByClassName("NM2_isHome")[0].innerText = ( (Cal2.HomeClub == "N115") ? "contre " : "à ");
-                    node.getElementsByClassName("NM2_team")[0].innerText = ( (Cal2.HomeClub == "N115") ? Cal2.AwayTeam : Cal2.HomeTeam);                    
+                    node.getElementsByClassName("NM2")[0].className = "NM2 displayNone";
                 }
-                node.getElementsByClassName("NM2_time")[0].innerText = Cal2.Time || "";
-                node.getElementsByClassName("NM2_time")[0].className = ( (Cal2.HomeClub == "N115") ? "NM2_team bold home" : "NM2_team bold nothome");
 
 
-
-                var Cal3 = Calendrier[weekNumber + 3][teamLetter];
-                node.getElementsByClassName("NM3_date")[0].innerText = transformDate(Cal3.Date, weekNumber + 3);
-                if (Cal3.HomeTeam == "BYE" || Cal3.AwayTeam == "BYE") {
-                    node.getElementsByClassName("NM3_isHome")[0].innerHTML = "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;";
-                    node.getElementsByClassName("NM3_team")[0].innerText = "BYE";
-                    node.getElementsByClassName("NM3_team")[0].className = "NM3_team bold bye";
-                    node.getElementsByClassName("NM3_a")[0].innerText = "";
+                if (weekNumber + 3 <= 22) {
+                    var Cal3 = Calendrier[weekNumber + 3][teamLetter];
+                    node.getElementsByClassName("NM3_date")[0].innerText = transformDate(Cal3.Date, weekNumber + 3);
+                    if (Cal3.HomeTeam == "BYE" || Cal3.AwayTeam == "BYE") {
+                        node.getElementsByClassName("NM3_isHome")[0].innerHTML = "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;";
+                        node.getElementsByClassName("NM3_team")[0].innerText = "BYE";
+                        node.getElementsByClassName("NM3_team")[0].className = "NM3_team bold bye";
+                        node.getElementsByClassName("NM3_a")[0].innerText = "";
+                    } else {
+                        node.getElementsByClassName("NM3_isHome")[0].innerText = ( (Cal3.HomeClub == "N115") ? "contre " : "à ");
+                        node.getElementsByClassName("NM3_team")[0].innerText = ( (Cal3.HomeClub == "N115") ? Cal3.AwayTeam : Cal3.HomeTeam);                    
+                    }
+                    node.getElementsByClassName("NM3_time")[0].innerText = Cal3.Time || "";
+                    node.getElementsByClassName("NM3_time")[0].className = ( (Cal3.HomeClub == "N115") ? "NM3_team bold home" : "NM3_team bold nothome");
                 } else {
-                    node.getElementsByClassName("NM3_isHome")[0].innerText = ( (Cal3.HomeClub == "N115") ? "contre " : "à ");
-                    node.getElementsByClassName("NM3_team")[0].innerText = ( (Cal3.HomeClub == "N115") ? Cal3.AwayTeam : Cal3.HomeTeam);                    
+                    node.getElementsByClassName("NM3")[0].className = "NM3 displayNone";
                 }
-                node.getElementsByClassName("NM3_time")[0].innerText = Cal3.Time || "";
-                node.getElementsByClassName("NM3_time")[0].className = ( (Cal3.HomeClub == "N115") ? "NM3_team bold home" : "NM3_team bold nothome");
 
 
             }
@@ -1025,7 +1035,9 @@ function changeForPrint(element) {
     element.style.borderStyle = "hidden";
 
     element.getElementsByClassName("classementWeek")[0].style.marginTop = "60px";
+    element.getElementsByClassName("classementHeader")[0].style.display = "none";
 
+    
     if (!document.getElementById("StatInd").checked) {
         var el2 = element.getElementsByClassName("classementMatches")[0];
         el2.style.marginTop = "150px";
