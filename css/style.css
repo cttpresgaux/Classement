@@ -41,7 +41,7 @@
 }
 
 #Classements {
-    margin-top: 60px;
+    margin-top: 50px;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
@@ -95,7 +95,7 @@
 .nextMatches {
     border: 3px solid;
     width: 84%;
-    margin: 0px 8% 50px 8%;
+    margin: 30px 8% 15px 8%;
 }
 
 .nextMatchesTitle{
@@ -106,9 +106,9 @@
 }
 
 .nextMatchesCore{
-    width: 84%;
-    margin: 0px 8%;
-    font: 18px arial;
+    width: 70%;
+    margin: 0px 15%;
+    font: 16px arial;
 }
 
 .cm_ve {
@@ -125,7 +125,7 @@
 .classementRI {
     border: 3px solid;
     width: 84%;
-    margin: 50px 8%;
+    margin: 35px 8%;
 }
 
 table.classementRI> tr > td{
@@ -137,8 +137,8 @@ table.classementRI>tr>td:first-child{
 
 .classementRI_notCreated {
     border: 3px solid;
-    width: 76%;
-    margin: 50px 12%;
+    width: 84%;
+    margin: 50px 8%;
     display: none;
 }
 
