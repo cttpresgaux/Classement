@@ -21,6 +21,7 @@
             <button id="downloadButton" disabled type="button" onclick="download()">Download</button>
         </div>
         <div id="controllerShow">
+            <span id="spanNextMatches">Prochains Matchs : &nbsp;<input type="checkbox" id="NextMatches" onchange="changeNM(this.checked)" /> </span>
             <span id="spanStatInd">Stat Ind. : &nbsp;<input type="checkbox" id="StatInd" onchange="changeRI(this.checked)" /> </span>
             <span id="spanSelectWeek">Semaine : &nbsp;<select id="SelectWeek"></select></span>
             
@@ -39,6 +40,14 @@
                     <th class="cm_sc">Score</th>
                 </tr>
             </table>
+            <div class="nextMatches displayNone">
+                <div class="nextMatchesTitle">Prochain Matchs :</div>
+                <div class="nextMatchesCore">
+                    <div class="nextMatches1">Presgaux A Contre AAA B à 19h</div>
+                    <div class="nextMatches2">Presgaux A Contre AAA B à 19h</div>
+                    <div class="nextMatches3">Presgaux A Contre AAA B à 19h</div>
+                </div> 
+            </div>
             <table class="classementRI displayNone">
                 <tr class="tableHeader">
                     <th class="cri_j">Joueur</th>

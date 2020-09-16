@@ -25,7 +25,7 @@
     padding: 0px 20px;
 }
 
-#spanSelectTeam, #spanStatInd, #spanSelectWeek {
+#spanSelectTeam, #spanStatInd, #spanSelectWeek, #spanNextMatches {
     margin: 0px 5px;
 }
 
@@ -92,6 +92,23 @@
     margin: 50px 4%;
 }
 
+.nextMatches {
+    border: 3px solid;
+    width: 84%;
+    margin: 0px 8% 50px 8%;
+}
+
+.nextMatchesTitle{
+    background-color: #848484;
+    font: bold 20px arial;
+    text-align: center;
+}
+
+.nextMatchesCore{
+    width: 80%;
+    margin: 0px 10% 0px 10%;
+    font: 16px arial;
+}
 
 .cm_ve {
     width: 38%;

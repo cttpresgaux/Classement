@@ -9,6 +9,7 @@ var Divs = [];
 var Teams = {};
 var NumTeam = 0;
 var matchesDates = new Array(23);
+var Calendrier = [];
 
 var rankingDone = 0;
 
@@ -31,7 +32,7 @@ function FirstInit() {
 
     }
 
-    importTeams();
+    importCalendrier();
     
 }
 
@@ -63,6 +64,14 @@ function Init() {
         }
                 
     }
+    var checkNM = localStorage.getItem('_Storage_NextMatches');
+    if (checkNM != null) {   
+        if (checkNM == "true") {
+            document.getElementById("NextMatches").checked = true;
+            changeNM(true); 
+        }
+                
+    }
     var value = localStorage.getItem('_Storage_SelectTeam');
     if (value != null) {       
         for (var i = 0; i < st.options.length; i++) {
@@ -74,6 +83,20 @@ function Init() {
 
     hideLoader();
 };
+
+function importCalendrier() {
+    var xml = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tab="http://api.frenoy.net/TabTAPI">'
+            +   '<soapenv:Header/>'
+            +   '<soapenv:Body>'
+            +       '<tab:GetMatchesRequest>'
+            +           '<tab:Club>N115</tab:Club>'
+            +       '</tab:GetMatchesRequest>'
+            +   '</soapenv:Body>'
+            + '</soapenv:Envelope>'
+
+
+    soap(xml, setCalendrier, importTeams);
+}
 
 function importMatchesDates(teamLetter) {
     teamLetter = teamLetter || "A";
@@ -224,6 +247,112 @@ function soap(strRequest, callback, _afterCallback) {
 
 
 // Callback Function
+function setCalendrier(resp, callback) {
+    Calendrier = [];
+    for (var i = 1; i <= 22; i++) { Calendrier[(i)] = {} }
+
+    var oParser = new DOMParser();
+    var oDOM = oParser.parseFromString(resp, "application/xml");
+
+    var matches = oDOM.firstElementChild.firstElementChild.firstElementChild.children;
+    var nameSpace = matches[0].namespaceURI;
+
+    var LastTeamLetter = "";
+    var NumberOfTeam = 0;
+
+    for (i = 1; i < matches.length; i++) {
+
+        var week = null;
+        var MatchId = null;
+        var HomeClub = null;
+        var HomeTeam = null;
+        var AwayClub = null;
+        var AwayTeam = null;
+        var IsHomeForfeited = null;
+        var IsAwayForfeited = null;
+
+        var Date = "";
+        var Time = "";
+        var _Date = "";
+        var _Time = "";
+
+        for (var _i = 0; _i < matches[i].children.length; _i++) {
+            switch (matches[i].children[_i].localName) {
+                case "WeekName":
+                    week = matches[i].children[_i].innerHTML;
+                    if (week[0] == 0) { week = week.substr(1) }
+                    week = parseInt(week);
+                    break;
+                case "MatchId":
+                    MatchId = matches[i].children[_i].innerHTML;
+                    break;
+                case "HomeClub":
+                    HomeClub = matches[i].children[_i].innerHTML;
+                    break;
+                case "HomeTeam":
+                    HomeTeam = matches[i].children[_i].innerHTML;
+                    break;
+                case "AwayClub":
+                    AwayClub = matches[i].children[_i].innerHTML;
+                    break;
+                case "AwayTeam":
+                    AwayTeam = matches[i].children[_i].innerHTML;
+                    break;
+                case "IsHomeForfeited":
+                    IsHomeForfeited = matches[i].children[_i].innerHTML;
+                    break;
+                case "IsAwayForfeited":
+                    IsAwayForfeited = matches[i].children[_i].innerHTML;
+                    break;
+                case "Date":
+                    _Date = matches[i].children[_i].innerHTML;
+                    break;
+                case "Time":
+                    _Time = matches[i].children[_i].innerHTML;
+                    break;
+            }
+        }
+
+        if (AwayClub != "-" && HomeClub != "-") {
+            Date = _Date;
+            Time = _Time.substring(0, _Time.length - 3);
+        } else if (AwayClub == "-") { AwayTeam = "BYE" }
+        else if (HomeClub == "-") { HomeTeam = "BYE" }
+
+
+        var isHome = (HomeClub == "N115");
+
+        var TeamLetter;
+        if (isHome) {
+            TeamLetter = HomeTeam[HomeTeam.length - 1];
+        } else {
+            TeamLetter = AwayTeam[AwayTeam.length - 1];
+        }
+        if (TeamLetter != LastTeamLetter) {
+            NumberOfTeam++;
+            LastTeamLetter = TeamLetter;
+        }
+
+
+        Calendrier[week][TeamLetter] = {};
+
+        Calendrier[week][TeamLetter]["MatchId"] = MatchId;
+        Calendrier[week][TeamLetter]["Date"] = Date;
+        Calendrier[week][TeamLetter]["Time"] = Time;
+        Calendrier[week][TeamLetter]["HomeClub"] = HomeClub;
+        Calendrier[week][TeamLetter]["HomeTeam"] = HomeTeam;
+        Calendrier[week][TeamLetter]["AwayClub"] = AwayClub;
+        Calendrier[week][TeamLetter]["AwayTeam"] = AwayTeam;
+        Calendrier[week][TeamLetter]["isHome"] = isHome;
+        Calendrier[week][TeamLetter]["IsHomeForfeited"] = IsHomeForfeited;
+        Calendrier[week][TeamLetter]["IsAwayForfeited"] = IsAwayForfeited;
+
+    }
+
+    NumTeam = NumberOfTeam;
+    callback()
+}
+
 function setTeams(resp, callback) {
     var oParser = new DOMParser();
     var oDOM = oParser.parseFromString(resp, "application/xml");
@@ -617,7 +746,27 @@ function setMatchesByDiv(resp, callback) {
                     node.getElementsByClassName("classementRI")[0].className = "classementRI_notCreated";
                 }
 
+                //Next matches
+                var weekNumber = parseInt(WeekName) ;
+                var teamLetter = null;
+                if (HomeClub == "N115") {
+                    teamLetter = HomeTeam.substr(HomeTeam.length - 1);
+                } else {
+                    teamLetter = AwayTeam.substr(AwayTeam.length - 1);
+                }
+
+                var Cal1 = Calendrier[weekNumber + 1][teamLetter];
+                node.getElementsByClassName("nextMatches1")[0].innerText = transformDate(Cal1.Date) + " : " + Cal1.HomeTeam + " contre " + Cal1.AwayTeam + " à " + Cal1.Time ;
+
+                var Cal2 = Calendrier[weekNumber + 2][teamLetter];
+                node.getElementsByClassName("nextMatches2")[0].innerText = transformDate(Cal2.Date) + " : " + Cal2.HomeTeam + " contre " + Cal2.AwayTeam + " à " + Cal2.Time ;
+
+                var Cal3 = Calendrier[weekNumber + 3][teamLetter];
+                node.getElementsByClassName("nextMatches3")[0].innerText = transformDate(Cal3.Date) + " : " + Cal3.HomeTeam + " contre " + Cal3.AwayTeam + " à " + Cal3.Time ;
+
             }
+
+
             
             var cm_ve = document.createElement("td");
             cm_ve.innerText = HomeTeam;
@@ -837,7 +986,7 @@ function changeForPrint(element) {
     element.style.height = "1000px";
     element.style.borderStyle = "hidden";
 
-    element.getElementsByClassName("classementWeek")[0].style.marginTop = "80px";
+    element.getElementsByClassName("classementWeek")[0].style.marginTop = "60px";
 
     if (!document.getElementById("StatInd").checked) {
         var el2 = element.getElementsByClassName("classementMatches")[0];
@@ -864,6 +1013,25 @@ function changeRI(check) {
 
 }
 
+function changeNM(check) {
+    localStorage.setItem("_Storage_NextMatches", check);
+    var RIs = document.getElementsByClassName("nextMatches");
+    for (var i = 0; i < RIs.length; i++) {
+        if (check) {
+            RIs[i].className = "nextMatches";
+        } else {
+            RIs[i].className = "nextMatches displayNone";
+        }
+        
+    }
+
+}
+
 function changeSelectTeam(value) {
     localStorage.setItem("_Storage_SelectTeam", value);
+}
+
+function transformDate(dateString){
+    var d = dateString.split('-');
+    return d[2]+"-"+d[1]+"-"+d[0];
 }
