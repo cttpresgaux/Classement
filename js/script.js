@@ -756,13 +756,13 @@ function setMatchesByDiv(resp, callback) {
                 }
 
                 var Cal1 = Calendrier[weekNumber + 1][teamLetter];
-                node.getElementsByClassName("nextMatches1")[0].innerText = transformDate(Cal1.Date) + " : " + Cal1.HomeTeam + " contre " + Cal1.AwayTeam + " à " + Cal1.Time ;
+                node.getElementsByClassName("nextMatches1")[0].innerText = transformDate(Cal1.Date, weekNumber + 1) + " : " + Cal1.HomeTeam + " contre " + Cal1.AwayTeam + " à " + (Cal1.Time || "00:00") ;
 
                 var Cal2 = Calendrier[weekNumber + 2][teamLetter];
-                node.getElementsByClassName("nextMatches2")[0].innerText = transformDate(Cal2.Date) + " : " + Cal2.HomeTeam + " contre " + Cal2.AwayTeam + " à " + Cal2.Time ;
+                node.getElementsByClassName("nextMatches2")[0].innerText = transformDate(Cal2.Date, weekNumber + 2) + " : " + Cal2.HomeTeam + " contre " + Cal2.AwayTeam + " à " + (Cal2.Time || "00:00") ;
 
                 var Cal3 = Calendrier[weekNumber + 3][teamLetter];
-                node.getElementsByClassName("nextMatches3")[0].innerText = transformDate(Cal3.Date) + " : " + Cal3.HomeTeam + " contre " + Cal3.AwayTeam + " à " + Cal3.Time ;
+                node.getElementsByClassName("nextMatches3")[0].innerText = transformDate(Cal3.Date, weekNumber + 3) + " : " + Cal3.HomeTeam + " contre " + Cal3.AwayTeam + " à " + (Cal3.Time || "00:00") ;
 
             }
 
@@ -1031,7 +1031,8 @@ function changeSelectTeam(value) {
     localStorage.setItem("_Storage_SelectTeam", value);
 }
 
-function transformDate(dateString){
+function transformDate(dateString, weekNumber){
+    if (dateString == "") {dateString = matchesDates[weekNumber]}
     var d = dateString.split('-');
     return d[2]+"-"+d[1]+"-"+d[0];
 }
