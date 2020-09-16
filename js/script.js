@@ -756,13 +756,45 @@ function setMatchesByDiv(resp, callback) {
                 }
 
                 var Cal1 = Calendrier[weekNumber + 1][teamLetter];
-                node.getElementsByClassName("nextMatches1")[0].innerText = transformDate(Cal1.Date, weekNumber + 1) + " : " + Cal1.HomeTeam + " contre " + Cal1.AwayTeam + " à " + (Cal1.Time || "00:00") ;
+                node.getElementsByClassName("NM1_date")[0].innerText = transformDate(Cal1.Date, weekNumber + 1);
+                if (Cal1.HomeTeam == "BYE" || Cal1.AwayTeam == "BYE") {
+                    node.getElementsByClassName("NM1_isHome")[0].innerHTML = "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;";
+                    node.getElementsByClassName("NM1_team")[0].innerText = "BYE";
+                    node.getElementsByClassName("NM1_team")[0].className = "NM1_team bold bye";
+                    node.getElementsByClassName("NM1_a")[0].innerText = "";
+                } else {
+                    node.getElementsByClassName("NM1_isHome")[0].innerText = ( (Cal1.HomeClub == "N115") ? "contre " : "à ");
+                    node.getElementsByClassName("NM1_team")[0].innerText = ( (Cal1.HomeClub == "N115") ? Cal1.AwayTeam : Cal1.HomeTeam);                    
+                }
+                node.getElementsByClassName("NM1_time")[0].innerText = Cal1.Time || "";
+
 
                 var Cal2 = Calendrier[weekNumber + 2][teamLetter];
-                node.getElementsByClassName("nextMatches2")[0].innerText = transformDate(Cal2.Date, weekNumber + 2) + " : " + Cal2.HomeTeam + " contre " + Cal2.AwayTeam + " à " + (Cal2.Time || "00:00") ;
+                node.getElementsByClassName("NM2_date")[0].innerText = transformDate(Cal2.Date, weekNumber + 2);
+                if (Cal2.HomeTeam == "BYE" || Cal2.AwayTeam == "BYE") {
+                    node.getElementsByClassName("NM2_isHome")[0].innerHTML = "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;";
+                    node.getElementsByClassName("NM2_team")[0].innerText = "BYE";
+                    node.getElementsByClassName("NM2_team")[0].className = "NM2_team bold bye";
+                    node.getElementsByClassName("NM2_a")[0].innerText = "";
+                } else {
+                    node.getElementsByClassName("NM2_isHome")[0].innerText = ( (Cal2.HomeClub == "N115") ? "contre " : "à ");
+                    node.getElementsByClassName("NM2_team")[0].innerText = ( (Cal2.HomeClub == "N115") ? Cal2.AwayTeam : Cal2.HomeTeam);                    
+                }
+                node.getElementsByClassName("NM2_time")[0].innerText = Cal2.Time || "";
+
 
                 var Cal3 = Calendrier[weekNumber + 3][teamLetter];
-                node.getElementsByClassName("nextMatches3")[0].innerText = transformDate(Cal3.Date, weekNumber + 3) + " : " + Cal3.HomeTeam + " contre " + Cal3.AwayTeam + " à " + (Cal3.Time || "00:00") ;
+                node.getElementsByClassName("NM3_date")[0].innerText = transformDate(Cal3.Date, weekNumber + 3);
+                if (Cal3.HomeTeam == "BYE" || Cal3.AwayTeam == "BYE") {
+                    node.getElementsByClassName("NM3_isHome")[0].innerHTML = "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;";
+                    node.getElementsByClassName("NM3_team")[0].innerText = "BYE";
+                    node.getElementsByClassName("NM3_team")[0].className = "NM3_team bold bye";
+                    node.getElementsByClassName("NM3_a")[0].innerText = "";
+                } else {
+                    node.getElementsByClassName("NM3_isHome")[0].innerText = ( (Cal3.HomeClub == "N115") ? "contre " : "à ");
+                    node.getElementsByClassName("NM3_team")[0].innerText = ( (Cal3.HomeClub == "N115") ? Cal3.AwayTeam : Cal3.HomeTeam);                    
+                }
+                node.getElementsByClassName("NM3_time")[0].innerText = Cal3.Time || "";
 
             }
 
@@ -1034,5 +1066,5 @@ function changeSelectTeam(value) {
 function transformDate(dateString, weekNumber){
     if (dateString == "") {dateString = matchesDates[weekNumber]}
     var d = dateString.split('-');
-    return d[2]+"-"+d[1]+"-"+d[0];
+    return d[2]+"/"+d[1]+"/"+d[0];
 }

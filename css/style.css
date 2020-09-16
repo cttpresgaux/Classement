@@ -102,12 +102,13 @@
     background-color: #848484;
     font: bold 20px arial;
     text-align: center;
+    border-bottom: 3px solid;
 }
 
 .nextMatchesCore{
-    width: 92%;
-    margin: 0px 4%;
-    font: 16px arial;
+    width: 84%;
+    margin: 0px 8%;
+    font: 18px arial;
 }
 
 .cm_ve {
@@ -136,8 +137,8 @@ table.classementRI>tr>td:first-child{
 
 .classementRI_notCreated {
     border: 3px solid;
-    width: 84%;
-    margin: 50px 8%;
+    width: 76%;
+    margin: 50px 12%;
     display: none;
 }
 
@@ -212,7 +213,7 @@ th {
     background-color: #848484;
 }
 td {
-    font: normal 18px arial;
+    font: normal 16px arial;
 }
 .tableHeader {
     font: bold 24px arial;
@@ -269,4 +270,12 @@ td {
 	
 	width: 25%;
     display: inline-block;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.bye{
+    color: red;
 }
