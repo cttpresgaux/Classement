@@ -767,6 +767,8 @@ function setMatchesByDiv(resp, callback) {
                     node.getElementsByClassName("NM1_team")[0].innerText = ( (Cal1.HomeClub == "N115") ? Cal1.AwayTeam : Cal1.HomeTeam);                    
                 }
                 node.getElementsByClassName("NM1_time")[0].innerText = Cal1.Time || "";
+                node.getElementsByClassName("NM1_time")[0].className = ( (Cal1.HomeClub == "N115") ? "NM1_team bold home" : "NM1_team bold nothome");
+        
 
 
                 var Cal2 = Calendrier[weekNumber + 2][teamLetter];
@@ -781,6 +783,8 @@ function setMatchesByDiv(resp, callback) {
                     node.getElementsByClassName("NM2_team")[0].innerText = ( (Cal2.HomeClub == "N115") ? Cal2.AwayTeam : Cal2.HomeTeam);                    
                 }
                 node.getElementsByClassName("NM2_time")[0].innerText = Cal2.Time || "";
+                node.getElementsByClassName("NM2_time")[0].className = ( (Cal2.HomeClub == "N115") ? "NM2_team bold home" : "NM2_team bold nothome");
+
 
 
                 var Cal3 = Calendrier[weekNumber + 3][teamLetter];
@@ -795,6 +799,8 @@ function setMatchesByDiv(resp, callback) {
                     node.getElementsByClassName("NM3_team")[0].innerText = ( (Cal3.HomeClub == "N115") ? Cal3.AwayTeam : Cal3.HomeTeam);                    
                 }
                 node.getElementsByClassName("NM3_time")[0].innerText = Cal3.Time || "";
+                node.getElementsByClassName("NM3_time")[0].className = ( (Cal3.HomeClub == "N115") ? "NM3_team bold home" : "NM3_team bold nothome");
+
 
             }
 

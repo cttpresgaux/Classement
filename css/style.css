@@ -275,6 +275,14 @@ td {
     font-weight: bold;
 }
 
+.nothome{
+    color: #c8504e;
+}
+
+.home{
+    color: cornflowerblue;
+}
+
 .bye{
-    color: red;
+    color: darkred;
 }
